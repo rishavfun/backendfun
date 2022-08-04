@@ -1,0 +1,25 @@
+Git Commands
+
+git clone https://github.com/sabihak89/plutonium.git : downloads the specified repository on local system
+git status : shows if you have modified any files on your local after cloning the repository
+git branch : shows current branch
+git branch -a : Lists all the branches of the repository
+git checkout -b practice : creates a new branch called ‘practice’ from the current branch(main by default)
+git checkout account : Switches to an existing branch called ‘account’  from the current branch
+git add description.txt : Adds a modified (or new) file to the staging area. This means that this file will be included in the commit 
+git commit -m “Added a text file for demo” : Creates a commit with a relevant message
+git push : pushes the commit to remote on the same repository where you are at
+git push <your-repository-link>: pushes the commit to remote at the specified repository
+git push --set-upstream origin <branch_name> (Only applicable when pushing a new branch for the first time)
+git fetch: Fetches(refreshes) the repository changes on local
+git pull –rebase: Refreshes a branch
+
+Git config
+
+Note: Don’t forget to create an access token at Github. This token should be used as password in the command below.
+
+Create access token here: Account > Setting > Developer Setting > Personal Access Token > Generate Access Token > Save the token somewhere
+
+git config –list : shows the content of git config file
+git config –global user.name sabiha : sets sabiha as user name in git config
+git config –global user.password access_token : sets access_token as user password in git config
