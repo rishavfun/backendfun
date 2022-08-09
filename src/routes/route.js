@@ -14,6 +14,52 @@ router.get('/students', function (req, res){
     let students = ['Sabiha', 'Neha', 'Akash']
     res.send(students)
 })
+router.get('/movies', function(req,res){
+    let movies = ['kgf', 'don','jllb']
+    res.send(movies)
+})
+
+router.get('/movies/:indexNumber', function(req,res){
+    let requestParams = req.params
+    let movieIndex = requestParams.indexNumber
+    console.log(movieIndex);
+    let movies = ['don','pk', 'omg']
+    if(movieIndex>2){
+        movies[movieIndex] = "use valid index"
+
+    }
+    res.send(movies[movieIndex])
+
+})
+router.get('/films',function(req,res){
+films = [{    "id": 0,
+"name": "don"},
+{
+    "id" : 1,
+    'name': "lal singh chada"
+},
+{
+    'id': 2,
+    'name':"omg"
+}]
+   res.send(films)
+})
+router.get('/films/:filmId',function(req,res){
+    films = [{    "id": 0,
+    "name": "don"},
+    {
+        "id" : 1,
+        'name': "lal singh chada"
+    },
+    {
+        'id': 2,
+        'name':"omg"
+    }]
+
+
+})
+
+
 
 router.get('/student-details/:name', function(req, res){
     /*
@@ -34,5 +80,9 @@ router.get('/student-details/:name', function(req, res){
     
     res.send('Dummy response')
 })
+
+
+
+
 
 module.exports = router;
