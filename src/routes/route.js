@@ -45,6 +45,10 @@ films = [{    "id": 0,
    res.send(films)
 })
 router.get('/films/:filmId',function(req,res){
+    let requestParams = req.params
+    let movieId = requestParams.filmId
+    console.log(movieId);
+   
     films = [{    "id": 0,
     "name": "don"},
     {
@@ -56,7 +60,11 @@ router.get('/films/:filmId',function(req,res){
         'name':"omg"
     }]
 
+    if(movieId>2){
+        films[movieId]= "No movie exists with this id"
+    }
 
+    res.send(films[movieId])
 })
 
 
