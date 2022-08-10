@@ -52,7 +52,15 @@ router.get('/candidates/:canidatesName', function (req, res) {
     console.log('The request objects is ' + JSON.stringify(req.params))
     console.log('Candidates name is ' + req.params.canidatesName)
     res.send('Done')
-})
+});
+
+router.post('/post-api', function (req, res) {
+    let arr = [12, "loot",]
+    let ele = req.body.element
+    arr.push(ele)
+
+    res.send({a:arr,b:2})
+});
 
 router.get("/films", function (req, res) {
     const films = [{
