@@ -113,5 +113,21 @@ router.post('/players', function (req, res) {
     res.send(  { data: players , status: true }  )
 })
 
+router.post('/votingAge',function(req,res){
+    let vote = req.body
+    console.log(vote);
+    let v=[]
+    for(i=0; i<vote.length; i++){
+        if(vote[i]['age']>10){
+            v.push(vote[i])
+            
+        }
+        vote[i]['votingStatus']=true
+    }
+    console.log(v);
+     res.send({data: v, status : true})
+})
+
+
 
 module.exports = router;
