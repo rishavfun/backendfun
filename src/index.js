@@ -11,15 +11,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect("mongodb+srv://functionup-cohort:G0Loxqc9wFEGyEeJ@cluster0.rzotr.mongodb.net/Pritesh8769811-DB?retryWrites=true&w=majority", {
     useNewUrlParser: true
 })
-.then( () => console.log("MongoDb is connected"))
-.catch ( err => console.log(err) )
+    .then(() => console.log("MongoDb is connected"))
+    .catch(err => console.log(err))
 
-app.use (
+app.use(
     function (req, res, next) {
-        console.log ("inside GLOBAL MW");
+        console.log(new Date().toLocaleDateString());
+        // console.log(": 192.168.29.83", "inside GLOBAL MW");
+        // console.log("inside GLOBAL MW");
+        var ip = require("ip");
+        console.dir(ip.address());  //npm install ip
+
+        // console.log(req.path);
         next();
-  }
-  );
+    }
+);
 
 app.use('/', route);
 
