@@ -4,6 +4,23 @@ const userModel = require("../models/userModel");
 /*
   Read all the comments multiple times to understand why we are doing what we are doing in login api and getUserData api
 */
+
+const authMiddle = function ( req, res, next) {
+  let token = req.headers["x-Auth-token"];
+  if (!token) token = req.headers["x-auth-token"];
+
+  //If no token is present in the request header return error. This means the user is not logged in.
+  if (!token) return res.send({ status: false, msg: "token must be present" });
+  // console.log(token);
+
+  let decodedToken = jwt.verify(token, "functionup-plutonium-very-very-secret-key");
+  if (!decodedToken)
+    return res.send({ status: false, msg: "token is invalid" });
+  next()
+}
+
+
+
 const createUser = async function (abcd, xyz) {
   //You can name the req, res objects anything.
   //but the first parameter is always the request 
@@ -39,18 +56,18 @@ const loginUser = async function (req, res) {
     },
     "functionup-plutonium-very-very-secret-key"
   );
-  res.setHeader("x-auth-token", token);
+  res.setHeader("x-auth-token", token); 
   res.send({ status: true, token: token });
 };
 
 const getUserData = async function (req, res) {
-  let token = req.headers["x-Auth-token"];
-  if (!token) token = req.headers["x-auth-token"];
+  // let token = req.headers["x-Auth-token"];
+  // if (!token) token = req.headers["x-auth-token"];
 
-  //If no token is present in the request header return error. This means the user is not logged in.
-  if (!token) return res.send({ status: false, msg: "token must be present" });
+  // // //If no token is present in the request header return error. This means the user is not logged in.
+  // if (!token) return res.send({ status: false, msg: "token must be present" });
 
-  console.log(token);
+  // console.log(token);
 
   // If a token is present then decode the token with verify function
   // verify takes two inputs:
@@ -61,9 +78,10 @@ const getUserData = async function (req, res) {
   // Decoding requires the secret again. 
   // A token can only be decoded successfully if the same secret was used to create(sign) that token.
   // And because this token is only known to the server, it can be assumed that if a token is decoded at server then this token must have been issued by the same server in past.
-  let decodedToken = jwt.verify(token, "functionup-plutonium-very-very-secret-key");
-  if (!decodedToken)
-    return res.send({ status: false, msg: "token is invalid" });
+  
+  // let decodedToken = jwt.verify(token, "functionup-plutonium-very-very-secret-key");
+  // if (!decodedToken)
+  //   return res.send({ status: false, msg: "token is invalid" });
 
   let userId = req.params.userId;
   let userDetails = await userModel.findById(userId);
@@ -75,10 +93,17 @@ const getUserData = async function (req, res) {
 };
 
 const updateUser = async function (req, res) {
-  // Do the same steps here:
-  // Check if the token is present
-  // Check if the token present is a valid token
-  // Return a different error message in both these cases
+  // let token = req.headers["x-Auth-token"];
+  // if (!token) token = req.headers["x-auth-token"];
+
+  // //If no token is present in the request header return error. This means the user is not logged in.
+  // if (!token) return res.send({ status: false, msg: "token must be present" });
+
+  // console.log(token);
+// decoding the token 
+  // let decodedToken = jwt.verify(token, "functionup-plutonium-very-very-secret-key");
+  // if (!decodedToken)
+  //   return res.send({ status: false, msg: "token is invalid" });
 
   let userId = req.params.userId;
   let user = await userModel.findById(userId);
@@ -88,11 +113,48 @@ const updateUser = async function (req, res) {
   }
 
   let userData = req.body;
-  let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData);
-  res.send({ status: updatedUser, data: updatedUser });
+  let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData, {new: true});
+  res.send({ status: updatedUser });
+  // res.send({ status: updatedUser, data: updatedUser });
 };
+
+
+
+const deleteUser = async function (req, res) {
+
+
+  let token = req.headers["x-Auth-token"];
+  if (!token) token = req.headers["x-auth-token"];
+
+  //If no token is present in the request header return error. This means the user is not logged in.
+  if (!token) return res.send({ status: false, msg: "token must be present" });
+
+  console.log(token);
+// decoding the token 
+  let decodedToken = jwt.verify(token, "functionup-plutonium-very-very-secret-key");
+  if (!decodedToken)
+    return res.send({ status: false, msg: "token is invalid" });
+
+
+let userId = req.params.userId;
+  let user = await userModel.findById(userId);
+  //Return an error if no user with the given id exists in the db
+  if (!user) {
+    return res.send("No such user exists");
+  }
+
+
+
+    let userData = req.body;
+    let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData, {new: true});
+    res.send({status: userData , data: updatedUser });
+
+}
+
 
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
+module.exports.deleteUser = deleteUser;
+module.exports.authMiddle = authMiddle;
