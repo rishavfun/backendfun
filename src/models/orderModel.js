@@ -12,7 +12,7 @@ const authorSchema = new mongoose.Schema( {
     },
     amount : Number,
     isFreeAppUser : Boolean,
-    date: Date,
+    date: String,
 
 }, { timestamps: true });
 

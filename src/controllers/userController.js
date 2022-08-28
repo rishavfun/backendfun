@@ -55,16 +55,17 @@ const UserModel = require("../models/userModel")
  const makeUser= async function(req,res){
     // let FreeApp = req.headers["isFreeAppUser"]
     // console.log(req.headers.isFreeAppUsera);
-    // console.log(req.headers);
-    req.headers.isFreeAppUsera = "efgh"
-    if(!req.headers.isFreeAppUsera){
-        res.send({ msg : "add isFreeAppUser in header"})
-    }
-else {
-    let data = req.body
-    let savedData= await UserModel.create(data)
-    res.send({msg: savedData})
-}
+//     console.log(req.headers);
+//     req.headers.isFreeAppUsera = true
+//     if(!req.headers.isFreeAppUsera){
+//         res.send({ msg : "add isFreeAppUser in header"})
+//     }
+// else {
+  
+// }
+let data = req.body
+let savedData= await UserModel.create(data)
+res.send({msg: savedData})
 }
  
 

@@ -16,26 +16,16 @@ const createOrder= async function (req, res) {
     let validproduct = await productModel.findById(productId)              
     if(validproduct==null) {return res.send({msg:"give valid productId"})}
 
-    //header check
-    // let head = req.headers["isFreeAppUser"]
-    // console.log(head);
-    // if(!head){
-    //     head = req.headers["isFreeappUser"]
-    // }
-     // if(!head){
-    //     res.send({msg: "headr is not present"})
-    // }
-
-    req.headers.isFreeAppUser = true
-    if(!req.headers.isFreeAppUser){
-        res.send({ msg : "add isFreeAppUser in header"})
+    if(req.headers.isFreeAppUser=== true){
+     let = await orderModel.updateMany(
+            { date: "25/08/2022" },
+            { $set: { amount: 0 } },
+            { new: true }
+        )
     }
-   
-
-
+  
     // let savedData= await orderModel.create(data)
-    // res.send({data: savedData})
-    res.send({msg: "done"})
+    res.send({data})
 }
 
 module.exports.createOrder= createOrder
