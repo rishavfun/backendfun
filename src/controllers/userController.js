@@ -85,7 +85,7 @@ const updateUser = async function (req, res) {
 };
 
 const postMessage = async function (req, res) {
-    let message = req.body.message
+    let message = req.body.message 
     // Check if the token is present
     // Check if the token present is a valid token
     // Return a different error message in both these cases
@@ -95,6 +95,8 @@ const postMessage = async function (req, res) {
 
     if(!decodedToken) return res.send({status: false, msg:"token is not valid"})
     
+    // AUTHORIZATION
+
     //userId for which the request is made. In this case message to be posted.
     let userToBeModified = req.params.userId
     //userId for the logged-in user
@@ -106,7 +108,7 @@ const postMessage = async function (req, res) {
     let user = await userModel.findById(req.params.userId)
     if(!user) return res.send({status: false, msg: 'No such user exists'})
     
-    let updatedPosts = user.posts
+    let updatedPosts = user.posts // inside schema post is defined.
     //add the message to user's posts
     updatedPosts.push(message)
     let updatedUser = await userModel.findOneAndUpdate({_id: user._id},{posts: updatedPosts}, {new: true})
